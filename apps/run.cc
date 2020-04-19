@@ -2,6 +2,8 @@
 
 #include <cinder/app/App.h>
 #include <cinder/app/RendererGl.h>
+#include "gflags/gflags.h"
+#include "nlohmann/json.hpp"
 
 #include "my_app.h"
 
