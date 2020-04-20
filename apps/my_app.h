@@ -15,6 +15,11 @@ class MyApp : public cinder::app::App {
   void update() override;
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
+  void mouseDown( cinder::app::MouseEvent) override;
+  
+ private:
+  void drawBlocks();
+  void loadData();
 };
 
 }  // namespace myapp

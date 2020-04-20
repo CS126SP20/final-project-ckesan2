@@ -2,17 +2,15 @@
 
 #include <cinder/app/App.h>
 #include <cinder/app/RendererGl.h>
-#include "gflags/gflags.h"
-#include "nlohmann/json.hpp"
-
+#include <gflags/gflags.h>
 #include "my_app.h"
-
 
 using cinder::app::App;
 using cinder::app::RendererGl;
 
-
 namespace myapp {
+
+DEFINE_string(name, "PlayerName", "the name of the player");
 
 const int kSamples = 8;
 const int kWidth = 800;
