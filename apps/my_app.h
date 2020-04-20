@@ -4,7 +4,7 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
-
+#include <mylibrary/leaderboard.h>
 
 namespace myapp {
 
@@ -16,10 +16,15 @@ class MyApp : public cinder::app::App {
   void draw() override;
   void keyDown(cinder::app::KeyEvent) override;
   void mouseDown( cinder::app::MouseEvent) override;
-  
+
  private:
   void drawBlocks();
   void loadData();
+
+
+ private:
+  mylibrary::LeaderBoard leaderboard;
+  const std::string player_name;
 };
 
 }  // namespace myapp
