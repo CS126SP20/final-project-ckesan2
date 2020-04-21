@@ -2,19 +2,21 @@
 
 #include "my_app.h"
 
+#include <cinder/Vector.h>
 #include <cinder/app/App.h>
-#include <gflags/gflags.h>
-#include "nlohmann/json.hpp"
 #include <cinder/gl/draw.h>
 #include <cinder/gl/gl.h>
-#include <cinder/Vector.h>
+#include <gflags/gflags.h>
 
+#include "mylibrary/circle.h"
+#include "nlohmann/json.hpp"
 
 namespace myapp {
 
 std::vector<std::string> names;
 std::vector<int> scores;
 const char kDbPath[] = "final.db";
+double previous_time = 0.0;
 
 using cinder::Color;
 using cinder::app::KeyEvent;
@@ -53,7 +55,17 @@ void MyApp::keyDown(KeyEvent event) {}
 void MyApp::drawBlocks() {
 
   cinder::gl::color( Color( 1, 0, 0 ) );
-  cinder::gl::drawSolidCircle( getWindowCenter(), 20);
+  //cinder::gl::drawSolidCircle( getWindowCenter(), 20);
+
+  double seconds = cinder::app::getElapsedSeconds();
+
+  if (seconds - previous_time >= 1) {
+    first_x = first.getX();
+    first_y = first.getY();
+    previous_time = getElapsedSeconds();
+  }
+
+  cinder::gl::drawSolidCircle({first_x,first_y},20);
 
   float coord = 100;
   cinder::gl::color( Color( .25, .25, .5) );

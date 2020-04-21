@@ -5,6 +5,7 @@
 
 #include <cinder/app/App.h>
 #include <mylibrary/leaderboard.h>
+#include "mylibrary/circle.h"
 
 namespace myapp {
 
@@ -23,8 +24,15 @@ class MyApp : public cinder::app::App {
 
 
  private:
+
   mylibrary::LeaderBoard leaderboard;
   const std::string player_name;
+  mylibrary::Circle first;
+  mylibrary::Circle second;
+  int first_x = first.getX();
+  int first_y = first.getY();
+  int second_x = second.getX();
+  int second_y = second.getY();
 };
 
 }  // namespace myapp
