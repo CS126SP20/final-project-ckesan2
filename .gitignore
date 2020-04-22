@@ -148,3 +148,4 @@ _deps
 # assets/*.sqlite*
 /resources/scoredata.json
 /resources/scoredata.json
+/assets/spacebackground.jpg

@@ -11,6 +11,8 @@
 
 namespace myapp {
 
+using std::string;
+
 class MyApp : public cinder::app::App {
  public:
   MyApp();
@@ -37,6 +39,7 @@ class MyApp : public cinder::app::App {
   int second_x = second.getX();
   int second_y = second.getY();
   mylibrary::GameEngine engine;
+  string mode = "";
 };
 
 }  // namespace myapp
