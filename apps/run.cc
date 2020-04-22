@@ -7,6 +7,8 @@
 
 using cinder::app::App;
 using cinder::app::RendererGl;
+using std::string;
+using std::vector;
 
 namespace myapp {
 
@@ -16,7 +18,23 @@ const int kSamples = 8;
 const int kWidth = 800;
 const int kHeight = 800;
 
+void ParseArgs(vector<string>* args) {
+
+  int argc = static_cast<int>(args->size());
+
+  vector<char*> argvs;
+  for (string& str : *args) {
+    argvs.push_back(&str[0]);
+  }
+
+  char** argv = argvs.data();
+  gflags::ParseCommandLineFlags(&argc, &argv, true);
+}
+
 void SetUp(App::Settings* settings) {
+
+  vector<string> args = settings->getCommandLineArgs();
+  ParseArgs(&args);
   settings->setWindowSize(kWidth, kHeight);
   settings->setTitle("My CS 126 Application");
 }

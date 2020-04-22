@@ -50,7 +50,9 @@ void MyApp::draw() {
 
 }
 
-void MyApp::keyDown(KeyEvent event) {}
+void MyApp::keyDown(KeyEvent event) {
+
+}
 
 void MyApp::drawBlocks() {
 
@@ -59,17 +61,20 @@ void MyApp::drawBlocks() {
 
   double seconds = cinder::app::getElapsedSeconds();
 
-  if (seconds - previous_time >= 1) {
+  if (seconds - previous_time >= .7) {
     first_x = first.getX();
     first_y = first.getY();
+    second_x = second.getX();
+    second_y = second.getY();
     previous_time = getElapsedSeconds();
   }
 
   cinder::gl::drawSolidCircle({first_x,first_y},20);
 
-  float coord = 100;
+  //float coord = 100;
   cinder::gl::color( Color( .25, .25, .5) );
-  cinder::gl::drawSolidCircle( getWindowCenter() + coord, 20);
+  //cinder::gl::drawSolidCircle( getWindowCenter() + coord, 20);
+  cinder::gl::drawSolidCircle({second_x,second_y},20);
 }
 
 void MyApp::loadData() {
