@@ -4,7 +4,9 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <mylibrary/gameengine.h>
 #include <mylibrary/leaderboard.h>
+
 #include "mylibrary/circle.h"
 
 namespace myapp {
@@ -19,9 +21,9 @@ class MyApp : public cinder::app::App {
   void mouseDown( cinder::app::MouseEvent) override;
 
  private:
-  void drawBlocks();
-  void drawModeScreen();
-  void loadData();
+  void DrawBlocks();
+  void DrawModeScreen();
+
 
 
  private:
@@ -34,6 +36,7 @@ class MyApp : public cinder::app::App {
   int first_y = first.getY();
   int second_x = second.getX();
   int second_y = second.getY();
+  mylibrary::GameEngine engine;
 };
 
 }  // namespace myapp

@@ -15,8 +15,6 @@
 
 namespace myapp {
 
-std::vector<std::string> names;
-std::vector<int> scores;
 const char kDbPath[] = "final.db";
 double previous_time = 0.0;
 bool is_mode_screen = true;
@@ -29,8 +27,6 @@ using cinder::app::KeyEvent;
 using std::cout;
 using std::endl;
 using std::string;
-
-
 
 DECLARE_string(name);
 
@@ -45,13 +41,12 @@ void MyApp::setup() {
   cinder::gl::enableDepthWrite();
   cinder::gl::enableDepthRead();
   is_mode_screen = true;
+  //drawModeScreen();
 
   //leaderboard.AddScoreToLeaderBoard({player_name, 6});
-  //loadData();
 }
 
 void MyApp::update() {
-
 
 }
 
@@ -61,9 +56,9 @@ void MyApp::draw() {
   //do a while loop for the game mode screen (while is_mode_screen)
   //drawModeScreen() in the while loop
 
-  //drawModeScreen();
+  DrawModeScreen();
   //only draw blocks if is_mode_screen = false
-  drawBlocks();
+  DrawBlocks();
 
 }
 
@@ -91,7 +86,7 @@ void MyApp::keyDown(KeyEvent event) {
 
 }
 
-void MyApp::drawModeScreen() {
+void MyApp::DrawModeScreen() {
 
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::white();
@@ -100,9 +95,11 @@ void MyApp::drawModeScreen() {
   PrintText("Easy", color, size, {center.x, center.y + 50});
   PrintText("Medium", color, size, {center.x, center.y + 100});
   PrintText("Hard", color, size, {center.x, center.y + 150});
+  //cout << center.x << endl;
+  //cout << center.y << endl;
 }
 
-void MyApp::drawBlocks() {
+void MyApp::DrawBlocks() {
 
   cinder::gl::color( Color( 1, 0, 0 ) );
   double seconds = cinder::app::getElapsedSeconds();
@@ -120,34 +117,21 @@ void MyApp::drawBlocks() {
   cinder::gl::drawSolidCircle({second_x,second_y},20);
 }
 
-void MyApp::loadData() {
-
-  names.push_back("chan");
-  names.push_back(FLAGS_name);
-  scores.push_back(6);
-  scores.push_back(7);
-  nlohmann::json j;
-  j["names"] = names;
-  j["scores"] = scores;
-
-  std::cout << j.dump(4) << std::endl;
-  std::ofstream o("/Users/ckesana/Downloads/cinder_0.9.2_mac"
-                  "/my-projects/126final-project/resources/scoredata.json");
-  o << std::setw(4) << j << std::endl;
-}
-
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
   if (event.isLeft()) {
-    //std::cout << event.getPos()<<std::endl;
+
     //check if the clicks location is the same as the block's
     //if its the same add 1 point to the score
-
-    if ((abs(event.getX() - first_x) <= 20 && abs(event.getY() - first_y) <= 20)
+    if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
+    || engine.ClickedCircle(event.getX(), event.getY(), second_x, second_y)) {
+      engine.IncreaseScore();
+      cout << engine.GetScore() << endl;
+    }
+    /**if ((abs(event.getX() - first_x) <= 20 && abs(event.getY() - first_y) <= 20)
     || (abs(event.getX() - second_x) <= 20 && abs(event.getY() - second_y) <= 20)) {
       cout << "got it" << endl;
-    }
+    }*/
   }
 }
-
 
 }  // namespace myapp
