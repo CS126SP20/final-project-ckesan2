@@ -20,6 +20,7 @@ class MyApp : public cinder::app::App {
 
  private:
   void drawBlocks();
+  void drawModeScreen();
   void loadData();
 
 
