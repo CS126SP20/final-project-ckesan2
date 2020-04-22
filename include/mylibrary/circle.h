@@ -23,6 +23,8 @@ class Circle {
   }
   int getX();
   int getY();
+  bool XIsInWindow(int x_value);
+  bool YIsInWindow(int y_value);
 
 };
 

@@ -54,9 +54,9 @@ void MyApp::draw() {
 
   cinder::gl::clear();
   //do a while loop for the game mode screen (while is_mode_screen)
-  //drawModeScreen() in the while loop
+  //DrawModeScreen() in the while loop
 
-  DrawModeScreen();
+  //DrawModeScreen();
   //only draw blocks if is_mode_screen = false
   DrawBlocks();
 
@@ -103,7 +103,6 @@ void MyApp::DrawBlocks() {
 
   cinder::gl::color( Color( 1, 0, 0 ) );
   double seconds = cinder::app::getElapsedSeconds();
-
   if (seconds - previous_time >= .7) {
     first_x = first.getX();
     first_y = first.getY();
@@ -112,14 +111,13 @@ void MyApp::DrawBlocks() {
     previous_time = getElapsedSeconds();
   }
   cinder::gl::drawSolidCircle({first_x,first_y},20);
-
   cinder::gl::color( Color( .25, .25, .5) );
   cinder::gl::drawSolidCircle({second_x,second_y},20);
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
-  if (event.isLeft()) {
 
+  if (event.isLeft()) {
     //check if the clicks location is the same as the block's
     //if its the same add 1 point to the score
     if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
@@ -127,10 +125,6 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
       engine.IncreaseScore();
       cout << engine.GetScore() << endl;
     }
-    /**if ((abs(event.getX() - first_x) <= 20 && abs(event.getY() - first_y) <= 20)
-    || (abs(event.getX() - second_x) <= 20 && abs(event.getY() - second_y) <= 20)) {
-      cout << "got it" << endl;
-    }*/
   }
 }
 
