@@ -17,6 +17,7 @@ namespace myapp {
 
 const char kDbPath[] = "final.db";
 double previous_time = 0.0;
+double timer_previous_time = 0.0;
 bool is_mode_screen = true;
 
 using cinder::Color;
@@ -58,6 +59,11 @@ void MyApp::update() {
 void MyApp::draw() {
 
   cinder::gl::clear();
+  if (timer == 0) {
+    DrawEndScreen();
+    return;
+  }
+
   if (is_mode_screen) {
     DrawModeScreen();
   }
@@ -65,6 +71,7 @@ void MyApp::draw() {
   if (!is_mode_screen) {
     DrawBlocks();
   }
+
   //cinder::gl::draw( image, getWindowBounds());
 }
 
@@ -132,6 +139,20 @@ void MyApp::DrawBlocks() {
   cinder::gl::drawSolidCircle({first_x,first_y},20);
   cinder::gl::color( Color( .25, .25, .5) );
   cinder::gl::drawSolidCircle({second_x,second_y},20);
+  DrawTimer(seconds);
+}
+
+void MyApp::DrawTimer(double seconds) {
+
+  if (seconds - timer_previous_time >= 1) {
+    timer--;
+    timer_previous_time = seconds;
+  }
+  const string text = std::to_string(timer);
+  const Color color = {1, 0, 0};
+  const cinder::ivec2 size = {100, 50};
+  const cinder::vec2 loc = {50, 50};
+  PrintText(text, color, size, loc);
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
@@ -164,6 +185,16 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
       cout << engine.GetScore() << endl;
     }
   }
+}
+
+void MyApp::DrawEndScreen() {
+
+  //add logic to print player's score and maybe top scores of the leaderboard
+  const cinder::vec2 center = getWindowCenter();
+  const cinder::ivec2 size = {500, 50};
+  const Color color = Color::white();
+
+  PrintText("Game Over :(", color, size, center);
 }
 
 }  // namespace myapp

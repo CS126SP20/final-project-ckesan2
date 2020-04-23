@@ -25,6 +25,8 @@ class MyApp : public cinder::app::App {
  private:
   void DrawBlocks();
   void DrawModeScreen();
+  void DrawTimer(double seconds);
+  void DrawEndScreen();
 
 
 
@@ -40,6 +42,8 @@ class MyApp : public cinder::app::App {
   int second_y = second.getY();
   mylibrary::GameEngine engine;
   string mode = "";
+  int timer = 11;
+
 };
 
 }  // namespace myapp
