@@ -18,6 +18,7 @@ namespace myapp {
 const char kDbPath[] = "final.db";
 double previous_time = 0.0;
 double timer_previous_time = 0.0;
+const int kLimit = 3;
 bool is_mode_screen = true;
 
 using cinder::Color;
@@ -36,7 +37,7 @@ DECLARE_string(name);
 MyApp::MyApp() :
 
     leaderboard{cinder::app::getAssetPath(kDbPath).string()},
-    player_name{FLAGS_name}
+    user_name{FLAGS_name}
 {}
 
 void MyApp::setup() {
@@ -44,8 +45,6 @@ void MyApp::setup() {
   cinder::gl::enableDepthWrite();
   cinder::gl::enableDepthRead();
   is_mode_screen = true;
-  //drawModeScreen();
-  //leaderboard.AddScoreToLeaderBoard({player_name, 6});
 
   auto picture = loadImage(
       loadAsset( "spacebackground.jpg" ) );
@@ -54,6 +53,21 @@ void MyApp::setup() {
 
 void MyApp::update() {
 
+  if (timer == 0) {
+    if (top_users.empty()) {
+
+      if (mode == "easy") {
+        leaderboard.AddScoreToEasyBoard({user_name, engine.GetScore()});
+        top_users = leaderboard.GetTopEasyScores(kLimit);
+      } else if (mode == "medium") {
+        leaderboard.AddScoreToMediumBoard({user_name, engine.GetScore()});
+        top_users = leaderboard.GetTopMedScores(kLimit);
+      } else if (mode == "hard") {
+        leaderboard.AddScoreToHardBoard({user_name, engine.GetScore()});
+        top_users = leaderboard.GetTopHardScores(kLimit);
+      }
+    }
+  }
 }
 
 void MyApp::draw() {
@@ -113,8 +127,6 @@ void MyApp::DrawModeScreen() {
       {center.x, center.y + 100});
   PrintText("Hard", color, small_size,
       {center.x, center.y + 150});
-  //cout << center.x << endl;
-  //cout << center.y << endl;
 }
 
 void MyApp::DrawBlocks() {
@@ -178,7 +190,9 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
     } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
     || engine.ClickedCircle(event.getX(), event.getY(), second_x, second_y)) {
 
-      engine.IncreaseScore();
+      if (timer != 0) {
+        engine.IncreaseScore();
+      }
       cout << engine.GetScore() << endl;
     }
   }
@@ -186,12 +200,19 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
 
 void MyApp::DrawEndScreen() {
 
-  //add logic to print player's score and maybe top scores of the leaderboard
   const cinder::vec2 center = getWindowCenter();
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::white();
 
-  PrintText("Game Over :(", color, size, center);
+  //citation: snake assignment
+  PrintText("Top Scores!", color, size, center);
+  int row = 0;
+  for (const mylibrary::User& user : top_users) {
+    std::stringstream ss;
+    ss << user.name << " - " << user.score;
+    PrintText(ss.str(), color, size, {center.x,
+                                      center.y + (++row) * 50});
+  }
 }
 
 }  // namespace myapp

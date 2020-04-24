@@ -33,7 +33,7 @@ class MyApp : public cinder::app::App {
  private:
 
   mylibrary::LeaderBoard leaderboard;
-  const std::string player_name;
+  const std::string user_name;
   mylibrary::Circle first;
   mylibrary::Circle second;
   int first_x = first.getX();
@@ -43,6 +43,7 @@ class MyApp : public cinder::app::App {
   mylibrary::GameEngine engine;
   string mode = "";
   int timer = 11;
+  std::vector<mylibrary::User> top_users;
 
 };
 

@@ -9,10 +9,6 @@ using std::string;
 using std::vector;
 
 LeaderBoard::LeaderBoard(const std::string& db_path) : db_{db_path} {
-  db_ << "CREATE TABLE if not exists leaderboard (\n"
-         "  name  TEXT NOT NULL,\n"
-         "  score INTEGER NOT NULL\n"
-         ");";
 
   db_ << "CREATE TABLE if not exists easyleaderboard (\n"
          "  name  TEXT NOT NULL,\n"
@@ -28,12 +24,6 @@ LeaderBoard::LeaderBoard(const std::string& db_path) : db_{db_path} {
          "  name  TEXT NOT NULL,\n"
          "  score INTEGER NOT NULL\n"
          ");";
-}
-
-void LeaderBoard::AddScoreToLeaderBoard(const User& user) {
-  db_ << "INSERT INTO leaderboard (name, score) VALUES (?,?);"
-      << user.name
-      << user.score;
 }
 
 void LeaderBoard::AddScoreToEasyBoard(const User& user) {
