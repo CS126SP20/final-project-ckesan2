@@ -16,6 +16,18 @@ class LeaderBoard {
   // Adds a player to the leaderboard.
   void AddScoreToLeaderBoard(const User&);
 
+  void AddScoreToEasyBoard(const User&);
+
+  void AddScoreToMediumBoard(const User&);
+
+  void AddScoreToHardBoard(const User&);
+
+  std::vector<User> GetTopEasyScores(const int limit);
+
+  std::vector<User> GetTopMedScores(const int limit);
+
+  std::vector<User> GetTopHardScores(const int limit);
+
  private:
   sqlite::database db_;
 };

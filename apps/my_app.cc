@@ -175,10 +175,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
         is_mode_screen = false;
         mode = "hard";
       }
-    }
-    //check if the clicks location is the same as the block's
-    //if its the same add 1 point to the score
-    if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
+    } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
     || engine.ClickedCircle(event.getX(), event.getY(), second_x, second_y)) {
 
       engine.IncreaseScore();
