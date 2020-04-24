@@ -172,20 +172,10 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
   if (event.isLeft()) {
 
     if (is_mode_screen) {
-
       const cinder::vec2 center = getWindowCenter();
-      if (abs(event.getX() - center.x) <= 48
-          && abs(event.getY() - (center.y + 50)) <= 25) {
+      mode = engine.GetGameMode(event.getX(), event.getY(), center.x, center.y);
+      if (!mode.empty()) {
         is_mode_screen = false;
-        mode = "easy";
-      } else if (abs(event.getX() - center.x) <= 55
-                 && abs(event.getY() - (center.y + 100)) <= 25) {
-        is_mode_screen = false;
-        mode = "medium";
-      } else if (abs(event.getX() - center.x) <= 48
-                 && abs(event.getY() - (center.y + 150)) <= 25) {
-        is_mode_screen = false;
-        mode = "hard";
       }
     } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
     || engine.ClickedCircle(event.getX(), event.getY(), second_x, second_y)) {
@@ -204,6 +194,8 @@ void MyApp::DrawEndScreen() {
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::white();
 
+  PrintText(user_name + "'s score: " + std::to_string(engine.GetScore()),
+      color, size, {center.x, center.y - 150});
   //citation: snake assignment
   PrintText("Top Scores!", color, size, center);
   int row = 0;
