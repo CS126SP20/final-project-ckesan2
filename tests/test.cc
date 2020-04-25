@@ -102,6 +102,92 @@ TEST_CASE("Circle Is Clicked", "[location]") {
 
 }
 
+TEST_CASE("Picked Easy Game Mode", "[easy]") {
+
+  mylibrary::GameEngine engine;
+  //assigned variables for numbers to just it have be more intuitive with the
+  //coordinates going into the function
+  int mouse_x = 400;
+  int mouse_y = 400;
+  int center_x = 400;
+  int center_y = 350;
+  REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y) == "easy");
+
+  SECTION("Different x coordinates but in range of easy button") {
+    mouse_x = 360;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y) == "easy");
+  }
+}
+
+TEST_CASE("Picked Medium Game Mode", "[medium]") {
+
+  mylibrary::GameEngine engine;
+  int mouse_x = 200;
+  int mouse_y = 400;
+  int center_x = 200;
+  int center_y = 300;
+  REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y) == "medium");
+
+  SECTION("Different x coordinate but in range of medium button") {
+    mouse_x = 145;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y,
+        center_x, center_y) == "medium");
+  }
+}
+
+TEST_CASE("Picked Hard Game Mode", "[hard]") {
+
+  mylibrary::GameEngine engine;
+  int mouse_x = 400;
+  int mouse_y = 400;
+  int center_x = 400;
+  int center_y = 250;
+  REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y) == "hard");
+
+  SECTION("Different x coordinates but in range of hard button") {
+    mouse_x = 448;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y) == "hard");
+  }
+}
+
+TEST_CASE("No Game Mode Picked", "[no game mode]") {
+
+  mylibrary::GameEngine engine;
+  int mouse_x = 0;
+  int mouse_y = 0;
+  int center_x = 0;
+  int center_y = 0;
+  REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y).empty());
+
+  SECTION("Different x coordinates and no game mode picked") {
+    mouse_x = 400;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y).empty());
+  }
+
+  SECTION("Different y coordinates and no game mode picked") {
+    mouse_y = 200;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y).empty());
+  }
+
+  SECTION("All same coordinates other than 0") {
+    mouse_x = 100;
+    mouse_y = 100;
+    center_x = 100;
+    center_y = 100;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y).empty());
+  }
+
+  SECTION("All different coordinates") {
+    mouse_x = 100;
+    mouse_y = 200;
+    center_x = 300;
+    center_y = 400;
+    REQUIRE(engine.GetGameMode(mouse_x, mouse_y, center_x, center_y).empty());
+  }
+}
+
+
+
 
 
 
