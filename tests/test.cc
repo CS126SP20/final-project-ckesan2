@@ -2,11 +2,8 @@
 
 #define CATCH_CONFIG_MAIN
 
-#include <cinder/Rand.h>
-#include <mylibrary/leaderboard.h>
 #include "mylibrary/gameengine.h"
 #include "mylibrary/circle.h"
-
 #include <catch2/catch.hpp>
 
 TEST_CASE("Getting the correct score", "[game score]") {

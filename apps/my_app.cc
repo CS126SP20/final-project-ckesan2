@@ -30,7 +30,10 @@ using std::cout;
 using std::endl;
 using std::string;
 
-cinder::gl::Texture2dRef image;
+cinder::gl::Texture2dRef front_image;
+cinder::gl::Texture2dRef game_image;
+cinder::gl::Texture2dRef end_image;
+
 
 DECLARE_string(name);
 
@@ -47,8 +50,14 @@ void MyApp::setup() {
   is_mode_screen = true;
 
   auto picture = loadImage(
-      loadAsset( "spacebackground.jpg" ) );
-  image = cinder::gl::Texture2d::create( picture);
+      loadAsset( "spacepic.jpeg" ) );
+  front_image = cinder::gl::Texture2d::create( picture);
+
+  auto game_pic = loadImage(loadAsset("earth.jpg"));
+  game_image = cinder::gl::Texture2d::create( game_pic);
+
+  auto ending_pic = loadImage(loadAsset("endingpic.jpg"));
+  end_image = cinder::gl::Texture2d::create(ending_pic);
 }
 
 void MyApp::update() {
@@ -73,20 +82,27 @@ void MyApp::update() {
 void MyApp::draw() {
 
   cinder::gl::clear();
+  cinder::gl::disableDepthRead();
+  cinder::gl::disableDepthWrite();
+  cinder::gl::enableAlphaBlending();
+  cinder::gl::color( Color::white());
+
   if (timer == 0) {
+    cinder::gl::draw(end_image, getWindowBounds());
     DrawEndScreen();
     return;
   }
 
   if (is_mode_screen) {
+    cinder::gl::draw( front_image, getWindowBounds());
     DrawModeScreen();
   }
 
   if (!is_mode_screen) {
+    cinder::gl::draw( game_image, getWindowBounds());
     DrawBlocks();
   }
 
-  //cinder::gl::draw( image, getWindowBounds());
 }
 
 //citation: from snake assignment
@@ -194,11 +210,13 @@ void MyApp::DrawEndScreen() {
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::white();
 
-  PrintText(user_name + "'s score: " + std::to_string(engine.GetScore()),
-      color, size, {center.x, center.y - 150});
+  PrintText(user_name + "'s score: " +
+  std::to_string(engine.GetScore()),
+  color, size, {center.x, center.y - 250});
+
   //citation: snake assignment
-  PrintText("Top Scores!", color, size, center);
-  int row = 0;
+  int row = 1;
+  PrintText("Top Scores!", color, size, {center.x, center.y + (++row)*50});
   for (const mylibrary::User& user : top_users) {
     std::stringstream ss;
     ss << user.name << " - " << user.score;
