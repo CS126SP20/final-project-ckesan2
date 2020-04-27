@@ -11,6 +11,7 @@ namespace mylibrary {
 
 struct User {
 
+  //each user has a name and a score value
   User(const std::string& name, int score) : name(name), score(score) {}
   std::string name;
   int score;

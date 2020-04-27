@@ -18,6 +18,7 @@ const int kSamples = 8;
 const int kWidth = 800;
 const int kHeight = 800;
 
+//uses gflags to go thru the command line arguments
 void ParseArgs(vector<string>* args) {
 
   int argc = static_cast<int>(args->size());
@@ -38,7 +39,6 @@ void SetUp(App::Settings* settings) {
   settings->setWindowSize(kWidth, kHeight);
   settings->setTitle("My CS 126 Application");
 }
-
 }  // namespace myapp
 
 

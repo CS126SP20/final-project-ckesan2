@@ -14,6 +14,7 @@ namespace myapp {
 using std::string;
 
 class MyApp : public cinder::app::App {
+
  public:
   MyApp();
   void setup() override;
@@ -23,12 +24,14 @@ class MyApp : public cinder::app::App {
   void mouseDown( cinder::app::MouseEvent) override;
 
  private:
+  //draws the two circles on the screen
   void DrawBlocks();
+  //displays the front screen asking user to pick game mode
   void DrawModeScreen();
+  //displays the timer on the screen
   void DrawTimer(double seconds);
+  //draws after the game is over and displays scores
   void DrawEndScreen();
-
-
 
  private:
 
