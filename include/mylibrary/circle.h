@@ -14,6 +14,7 @@ class Circle {
  private:
   int x = 1;
   int y = 1;
+  const int kRadius = 20;
 
  public:
   Circle() {
@@ -29,6 +30,8 @@ class Circle {
   bool XIsInWindow(int x_value);
   //checks that the y coordinate is in the screen
   bool YIsInWindow(int y_value);
+  //returns the radius of the circle
+  int GetRadius();
 
 };
 

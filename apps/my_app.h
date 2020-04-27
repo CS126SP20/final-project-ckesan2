@@ -47,6 +47,7 @@ class MyApp : public cinder::app::App {
   string mode = "";
   int timer = 26;
   std::vector<mylibrary::User> top_users;
+  int radius = first.GetRadius();
 
 };
 

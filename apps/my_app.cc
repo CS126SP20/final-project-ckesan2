@@ -134,14 +134,16 @@ void MyApp::DrawModeScreen() {
 
   //locations for the text to be printed
   const cinder::ivec2 size = {400, 50};
-  const cinder::ivec2 small_size = {110, 50};
+  const cinder::ivec2 medium_size = {110, 50};
+  const cinder::ivec2 small_size = {96, 50};
   const Color color = Color::white();
   const cinder::vec2 center = getWindowCenter();
   //prints the game mode options on the screen for the user to click
   PrintText("Choose your Game Mode!", color, size, center);
+  //loc parameter = center of the text box
   PrintText("Easy", color, small_size,
       {center.x, center.y + 50});
-  PrintText("Medium", color, small_size,
+  PrintText("Medium", color, medium_size,
       {center.x, center.y + 100});
   PrintText("Hard", color, small_size,
       {center.x, center.y + 150});
@@ -171,9 +173,9 @@ void MyApp::DrawBlocks() {
   }
   //draws the two circles with the coordinates as their centers
   cinder::gl::color( Color( 1, 0, 0 ) );
-  cinder::gl::drawSolidCircle({first_x,first_y},20);
+  cinder::gl::drawSolidCircle({first_x,first_y},radius);
   cinder::gl::color( Color( .25, .25, .5) );
-  cinder::gl::drawSolidCircle({second_x,second_y},20);
+  cinder::gl::drawSolidCircle({second_x,second_y},radius);
   //draws the timer for the game taking in the elapsed time
   DrawTimer(seconds);
 }
@@ -208,8 +210,9 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
       }
       //if a mode has already been picked, check to see if the user clicked
       //on one of the circles
-    } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x, first_y)
-    || engine.ClickedCircle(event.getX(), event.getY(), second_x, second_y)) {
+    } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x,
+        first_y, radius) || engine.ClickedCircle(event.getX(), event.getY(),
+            second_x, second_y, radius)) {
       //if the game is not over yet, add to the score
       if (timer != 0) {
         engine.IncreaseScore();
@@ -231,7 +234,8 @@ void MyApp::DrawEndScreen() {
   //citation: snake assignment
   //prints the top scores of the leaderboard depending on game mode
   int row = 1;
-  PrintText("Top Scores!", color, size, {center.x, center.y + (++row)*50});
+  PrintText("Top Scores!", color, size, {center.x,
+                                         center.y + (++row)*50});
   for (const mylibrary::User& user : top_users) {
     std::stringstream ss;
     ss << user.name << " - " << user.score;

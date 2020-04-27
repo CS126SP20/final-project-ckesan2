@@ -8,14 +8,17 @@
 
 TEST_CASE("Getting the correct score", "[game score]") {
 
+  //makes sure the score is 0 at the start of the game
   mylibrary::GameEngine engine;
   REQUIRE(engine.GetScore() == 0);
 
+  //makes sure score updated after increasing it
   SECTION("Add to the score") {
     engine.IncreaseScore();
     REQUIRE(engine.GetScore() == 1);
   }
 
+  //checks that score goes back to 0 after resetting the game
   SECTION("Reset score") {
     engine.IncreaseScore();
     engine.IncreaseScore();
@@ -27,6 +30,7 @@ TEST_CASE("Getting the correct score", "[game score]") {
 
 TEST_CASE("Accuracy of X Coordinates", "[coordinates]") {
 
+  //checks that x coordinate changes after every call of getX
   mylibrary::Circle circle;
   int x = circle.getX();
   int x2 = circle.getX();
@@ -35,6 +39,7 @@ TEST_CASE("Accuracy of X Coordinates", "[coordinates]") {
 
 TEST_CASE("Accuracy of Y Coordinates", "[coordinates]") {
 
+  //checks that y coordinate changes after every call of getY
   mylibrary::Circle circle;
   int y = circle.getY();
   int y2 = circle.getY();
@@ -43,6 +48,7 @@ TEST_CASE("Accuracy of Y Coordinates", "[coordinates]") {
 
 TEST_CASE("X of Circle center is on screen", "[coordinates]") {
 
+  //checks that the x coordinate is not off screen
   mylibrary::Circle circle;
   int x = circle.getX();
   REQUIRE(!circle.XIsInWindow(1000));
@@ -54,6 +60,7 @@ TEST_CASE("X of Circle center is on screen", "[coordinates]") {
 
 TEST_CASE("Y of Circle center is on screen", "[coordinates]") {
 
+  //checks that the y coordinate is not off screen
   mylibrary::Circle circle;
   int y = circle.getY();
   REQUIRE(!circle.YIsInWindow(800));
@@ -65,36 +72,40 @@ TEST_CASE("Y of Circle center is on screen", "[coordinates]") {
 
 TEST_CASE("Circle Not Clicked", "[location]") {
 
+  //checks that the circle is not clicked if click is outside the radius
   mylibrary::GameEngine engine;
-  REQUIRE(!engine.ClickedCircle(20,20,200,200));
+  int radius = 20;
+  REQUIRE(!engine.ClickedCircle(20,20,200,200, radius));
 
   SECTION("Off by 21 in x and y") {
-    REQUIRE(!engine.ClickedCircle(20,20,41,41));
+    REQUIRE(!engine.ClickedCircle(20,20,41,41, radius));
   }
 
   SECTION("Off by 21 in x") {
-    REQUIRE(!engine.ClickedCircle(20,20,41,40));
+    REQUIRE(!engine.ClickedCircle(20,20,41,40, radius));
   }
 
   SECTION("Off by 21 in y") {
-    REQUIRE(!engine.ClickedCircle(20,20,40,41));
+    REQUIRE(!engine.ClickedCircle(20,20,40,41, radius));
   }
 }
 
 TEST_CASE("Circle Is Clicked", "[location]") {
 
+  //checks that the circle is clicked if click is inside the radius
   mylibrary::GameEngine engine;
-  REQUIRE(engine.ClickedCircle(20,20,20,20));
+  int radius = 20;
+  REQUIRE(engine.ClickedCircle(20,20,20,20, radius));
 
   SECTION("Click In range") {
-    REQUIRE(engine.ClickedCircle(20,20,40,40));
-    REQUIRE(engine.ClickedCircle(20,20,0,0));
-    REQUIRE(engine.ClickedCircle(10,20,9,19));
-    REQUIRE(engine.ClickedCircle(0,0,0,0));
+    REQUIRE(engine.ClickedCircle(20,20,40,40, radius));
+    REQUIRE(engine.ClickedCircle(20,20,0,0, radius));
+    REQUIRE(engine.ClickedCircle(10,20,9,19, radius));
+    REQUIRE(engine.ClickedCircle(0,0,0,0, radius));
   }
 
   SECTION("Circle partially off screen") {
-    REQUIRE(engine.ClickedCircle(10,10,-1,-1));
+    REQUIRE(engine.ClickedCircle(10,10,-1,-1, radius));
   }
 
 }

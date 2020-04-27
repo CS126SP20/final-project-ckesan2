@@ -40,4 +40,9 @@ bool Circle::YIsInWindow(int y_value) {
   return y_value >= 0 && y_value <= 680;
 }
 
+int Circle::GetRadius() {
+
+  return kRadius;
+}
+
 }

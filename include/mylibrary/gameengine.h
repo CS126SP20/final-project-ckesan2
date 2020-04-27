@@ -19,7 +19,8 @@ class GameEngine {
   void IncreaseScore();
   //takes in the mouse click coordinates and the circle center
   // coordinates and checks if the click was on the circle. Returns true/false
-  bool ClickedCircle(int mouse_x, int mouse_y, int circle_x, int circle_y);
+  bool ClickedCircle(int mouse_x, int mouse_y, int circle_x, int circle_y,
+      int radius);
   //takes in the mouse click coordinates and the screen center coordinates and
   // checks which game mode the user picked. Returns the name of the game mode
   std::string GetGameMode(int mouse_x, int mouse_y, int center_x, int center_y);
