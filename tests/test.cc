@@ -112,6 +112,7 @@ TEST_CASE("Circle Is Clicked", "[location]") {
 
 TEST_CASE("Picked Easy Game Mode", "[easy]") {
 
+  //checks that inputted coordinates means that user clicked the easy mode
   mylibrary::GameEngine engine;
   //assigned variables for numbers to just it have be more intuitive with the
   //coordinates going into the function
@@ -129,6 +130,7 @@ TEST_CASE("Picked Easy Game Mode", "[easy]") {
 
 TEST_CASE("Picked Medium Game Mode", "[medium]") {
 
+  //checks that inputted coordinates means that user clicked the medium mode
   mylibrary::GameEngine engine;
   int mouse_x = 200;
   int mouse_y = 400;
@@ -145,6 +147,7 @@ TEST_CASE("Picked Medium Game Mode", "[medium]") {
 
 TEST_CASE("Picked Hard Game Mode", "[hard]") {
 
+  //checks that inputted coordinates means that user clicked the hard mode
   mylibrary::GameEngine engine;
   int mouse_x = 400;
   int mouse_y = 400;
@@ -160,6 +163,8 @@ TEST_CASE("Picked Hard Game Mode", "[hard]") {
 
 TEST_CASE("No Game Mode Picked", "[no game mode]") {
 
+  //checks that these coordinates mean that the user has not clicked on a game
+  //mode's coordinates
   mylibrary::GameEngine engine;
   int mouse_x = 0;
   int mouse_y = 0;

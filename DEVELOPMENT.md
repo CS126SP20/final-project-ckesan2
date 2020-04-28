@@ -62,3 +62,13 @@ numbers and adjusted how I obtain my circle radius. Made a
 getter in the Circle class.
     - Still need to add an item to the game
     - Still need to add background music
+    
+- **4/28/2020** Replaced more of my magic numbers and 
+added more tests and comments to my test file. Wrote 
+functionality for drawing two potion items to the game.
+Added background music.
+    - Still need to implement functionality once an item
+    is clicked.
+    - Need to finish a method in GameEngine that checks
+    if an item was clicked.
+    - Need to write tests for the new method in GameEngine

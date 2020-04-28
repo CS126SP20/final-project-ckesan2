@@ -33,6 +33,8 @@ class MyApp : public cinder::app::App {
   //draws after the game is over and displays scores
   void DrawEndScreen();
 
+  void DrawItems();
+
  private:
 
   mylibrary::LeaderBoard leaderboard;
@@ -45,10 +47,18 @@ class MyApp : public cinder::app::App {
   int second_y = second.getY();
   mylibrary::GameEngine engine;
   string mode = "";
-  int timer = 26;
+  int timer = 15;
   std::vector<mylibrary::User> top_users;
   int radius = first.GetRadius();
 
+  int poison_centerx;
+  int poison_centery;
+  int slow_centerx;
+  int slow_centery;
+  int slow_height;
+  int slow_width;
+  int poison_height;
+  int poison_width;
 };
 
 }  // namespace myapp

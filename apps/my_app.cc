@@ -9,9 +9,9 @@
 #include <gflags/gflags.h>
 #include <cinder/Font.h>
 #include <cinder/Text.h>
-
 #include "mylibrary/circle.h"
 #include "nlohmann/json.hpp"
+#include <cinder/audio/Voice.h>
 
 namespace myapp {
 
@@ -19,7 +19,13 @@ const char kDbPath[] = "final.db";
 double previous_time = 0.0;
 double timer_previous_time = 0.0;
 const int kLimit = 3;
+const int kFontSize = 30;
+const int kModeXSize = 400;
+const int kTimerXSize = 100;
+const int kEndXSize = 500;
 bool is_mode_screen = true;
+bool clicked_poison = false;
+bool clicked_slow = false;
 
 using cinder::Color;
 using cinder::ColorA;
@@ -33,7 +39,9 @@ using std::string;
 cinder::gl::Texture2dRef front_image;
 cinder::gl::Texture2dRef game_image;
 cinder::gl::Texture2dRef end_image;
-
+cinder::gl::Texture2dRef poison_image;
+cinder::gl::Texture2dRef slow_image;
+cinder::audio::VoiceRef mVoice;
 
 DECLARE_string(name);
 
@@ -45,8 +53,11 @@ MyApp::MyApp() :
 
 void MyApp::setup() {
 
-  cinder::gl::enableDepthWrite();
-  cinder::gl::enableDepthRead();
+  cinder::audio::SourceFileRef sourceFile = cinder::audio::load(
+      cinder::app::loadAsset(
+          "Elevators_Need_Rock_Too.mp3" ) );
+  mVoice = cinder::audio::Voice::create( sourceFile );
+  //mVoice->start();
   is_mode_screen = true;
   //loads my 3 background images into the textures
   auto picture = loadImage(
@@ -56,6 +67,11 @@ void MyApp::setup() {
   game_image = cinder::gl::Texture2d::create( game_pic);
   auto ending_pic = loadImage(loadAsset("endingpic.jpg"));
   end_image = cinder::gl::Texture2d::create(ending_pic);
+  //loads 2 item images into textures
+  auto poison_pic = loadImage(loadAsset( "poison.png" ) );
+  poison_image = cinder::gl::Texture2d::create(poison_pic);
+  auto slow_pic = loadImage(loadAsset( "slow.png" ) );
+  slow_image = cinder::gl::Texture2d::create(slow_pic);
 }
 
 void MyApp::update() {
@@ -89,6 +105,7 @@ void MyApp::draw() {
   cinder::gl::color( Color::white());
   //if game is over, draw the game over picture and screen
   if (timer == 0) {
+    mVoice->stop();
     cinder::gl::draw(end_image, getWindowBounds());
     DrawEndScreen();
     return;
@@ -100,6 +117,9 @@ void MyApp::draw() {
     //otherwise draw the game image and game screen
   } else if (!is_mode_screen) {
     cinder::gl::draw( game_image, getWindowBounds());
+    if (timer <= 10) {
+      DrawItems();
+    }
     DrawBlocks();
   }
 }
@@ -112,7 +132,7 @@ void PrintText(const string& text, const Color& color,
   cinder::gl::color(color);
   auto box = TextBox()
       .alignment(TextBox::CENTER)
-      .font(cinder::Font("Arial", 30))
+      .font(cinder::Font("Arial", kFontSize))
       .size(size)
       .color(color)
       .backgroundColor(ColorA(0, 0, 0, 0))
@@ -132,21 +152,21 @@ void MyApp::keyDown(KeyEvent event) {
 
 void MyApp::DrawModeScreen() {
 
-  //locations for the text to be printed
-  const cinder::ivec2 size = {400, 50};
-  const cinder::ivec2 medium_size = {110, 50};
-  const cinder::ivec2 small_size = {96, 50};
+  //sizes for the text boxes to be printed
+  const cinder::ivec2 size = {kModeXSize, mylibrary::kYsize};
+  const cinder::ivec2 medium_size = {mylibrary::kMediumXsize, mylibrary::kYsize};
+  const cinder::ivec2 small_size = {mylibrary::kSmallXSize, mylibrary::kYsize};
   const Color color = Color::white();
   const cinder::vec2 center = getWindowCenter();
   //prints the game mode options on the screen for the user to click
   PrintText("Choose your Game Mode!", color, size, center);
   //loc parameter = center of the text box
   PrintText("Easy", color, small_size,
-      {center.x, center.y + 50});
+      {center.x, center.y + mylibrary::kYsize});
   PrintText("Medium", color, medium_size,
-      {center.x, center.y + 100});
+      {center.x, center.y + (2*mylibrary::kYsize)});
   PrintText("Hard", color, small_size,
-      {center.x, center.y + 150});
+      {center.x, center.y + (3*mylibrary::kYsize)});
 }
 
 void MyApp::DrawBlocks() {
@@ -191,7 +211,7 @@ void MyApp::DrawTimer(double seconds) {
   //prints the time left on the upper left corner of the screen
   const string text = std::to_string(timer);
   const Color color = {1, 0, 0};
-  const cinder::ivec2 size = {100, 50};
+  const cinder::ivec2 size = {kTimerXSize, mylibrary::kYsize};
   const cinder::vec2 loc = {50, 50};
   PrintText(text, color, size, loc);
 }
@@ -225,7 +245,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
 void MyApp::DrawEndScreen() {
 
   const cinder::vec2 center = getWindowCenter();
-  const cinder::ivec2 size = {500, 50};
+  const cinder::ivec2 size = {kEndXSize, mylibrary::kYsize};
   const Color color = Color::white();
   //print's the current player's score in white
   PrintText(user_name + "'s score: " +
@@ -234,13 +254,36 @@ void MyApp::DrawEndScreen() {
   //citation: snake assignment
   //prints the top scores of the leaderboard depending on game mode
   int row = 1;
-  PrintText("Top Scores!", color, size, {center.x,
-                                         center.y + (++row)*50});
+  PrintText("Top Scores!", color, size, {center.x,center.y +
+  (++row)*mylibrary::kYsize});
   for (const mylibrary::User& user : top_users) {
     std::stringstream ss;
     ss << user.name << " - " << user.score;
-    PrintText(ss.str(), color, size, {center.x,
-                                      center.y + (++row) * 50});
+    PrintText(ss.str(), color, size, {center.x,center.y +
+    (++row) * mylibrary::kYsize});
+  }
+}
+
+void MyApp::DrawItems() {
+
+  const cinder::vec2 center = getWindowCenter();
+  if (!clicked_poison) {
+    Rectf poison_rect( center.x - 50, center.y - 50,
+        center.x + 50,center.y + 50);
+    cinder::gl::draw( poison_image, poison_rect);
+    poison_centerx = poison_rect.getCenter().x;
+    poison_centery = poison_rect.getCenter().y;
+    poison_height = poison_rect.getHeight();
+    poison_height = poison_rect.getWidth();
+  }
+  if (!clicked_slow && mode == "hard") {
+    Rectf slow_rect( center.x - 50, center.y + 70, center.x + 50,
+                    center.y + 210);
+    cinder::gl::draw( slow_image, slow_rect);
+    slow_centerx = slow_rect.getCenter().x;
+    slow_centery = slow_rect.getCenter().y;
+    slow_height = slow_rect.getHeight();
+    slow_height = slow_rect.getWidth();
   }
 }
 }  // namespace myapp

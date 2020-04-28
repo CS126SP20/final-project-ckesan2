@@ -37,19 +37,25 @@ std::string GameEngine::GetGameMode(int mouse_x, int mouse_y, int center_x,
   // returns that game mode
   //48 is half of 96, which is the x size for the easy and hard text boxes
   //25 is half of 50, which is y size for all 3 text boxes
-  if (abs(mouse_x - center_x) <= 48
-  && abs(mouse_y - (center_y + 50)) <= 25) {
+  if (abs(mouse_x - center_x) <= kSmallXSize/2
+  && abs(mouse_y - (center_y + kYsize)) <= kYsize/2) {
     return "easy";
     //55 is half of 110, which is the x size of the medium mode text box
-  } else if (abs(mouse_x - center_x) <= 55
-  && abs(mouse_y - (center_y + 100)) <= 25) {
+  } else if (abs(mouse_x - center_x) <= kMediumXsize/2
+  && abs(mouse_y - (center_y + (2*kYsize))) <= kYsize/2) {
     return "medium";
-  } else if (abs(mouse_x - center_x) <= 48
-  && abs(mouse_y - (center_y + 150)) <= 25) {
+  } else if (abs(mouse_x - center_x) <= kSmallXSize/2
+  && abs(mouse_y - (center_y + (3*kYsize))) <= kYsize/2) {
     return "hard";
   }
   //if a game mode has not been clicked yet, string will be empty
   return "";
 }
 
+bool GameEngine::ClickedItem(int mouse_x, int mouse_y, int item_centerx,
+    int item_centery, int item_width, int item_height) {
+
+  return abs(mouse_x - item_centerx) <= (item_width / 2) &&
+         abs(mouse_y - item_centery) <= (item_height / 2);
+}
 }

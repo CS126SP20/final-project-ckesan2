@@ -8,6 +8,10 @@
 #include <string>
 namespace mylibrary {
 
+const int kYsize = 50;
+const int kMediumXsize = 110;
+const int kSmallXSize = 96;
+
 class GameEngine {
 
  public:
@@ -25,9 +29,11 @@ class GameEngine {
   // checks which game mode the user picked. Returns the name of the game mode
   std::string GetGameMode(int mouse_x, int mouse_y, int center_x, int center_y);
 
+  bool ClickedItem(int mouse_x, int mouse_y, int item_centerx, int item_centery,
+      int item_width, int item_height);
+
  private:
   int score = 0;
-
 };
 }
 
