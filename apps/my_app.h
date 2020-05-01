@@ -47,7 +47,7 @@ class MyApp : public cinder::app::App {
   int second_y = second.getY();
   mylibrary::GameEngine engine;
   string mode = "";
-  int timer = 15;
+  int timer = 26;
   std::vector<mylibrary::User> top_users;
   int radius = first.GetRadius();
 

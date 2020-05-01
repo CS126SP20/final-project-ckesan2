@@ -43,6 +43,7 @@ cinder::gl::Texture2dRef poison_image;
 cinder::gl::Texture2dRef slow_image;
 cinder::audio::VoiceRef mVoice;
 
+//add summary bit for item selected at the end screen
 DECLARE_string(name);
 
 MyApp::MyApp() :
@@ -105,7 +106,7 @@ void MyApp::draw() {
   cinder::gl::color( Color::white());
   //if game is over, draw the game over picture and screen
   if (timer == 0) {
-    mVoice->stop();
+    //mVoice->stop();
     cinder::gl::draw(end_image, getWindowBounds());
     DrawEndScreen();
     return;

@@ -1,6 +1,5 @@
 # Development
 
----
 - **4/16/2020** Fixed my SDK error that would not let me
 build my cinder project. I had to delete cmake-build-debug 
 and reload cmake.
@@ -71,4 +70,6 @@ Added background music.
     is clicked.
     - Need to finish a method in GameEngine that checks
     if an item was clicked.
-    - Need to write tests for the new method in GameEngine
+
+
+---
