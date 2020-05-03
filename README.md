@@ -10,7 +10,7 @@ layout.
 
 **Author**: Chandrachur Kesana - [`ckesan2@illinois.edu`](mailto:ckesan2@illinois.edu)
 
-###### **Quick Click**:
+**Quick Click**:
 
 * What is it? 
 
