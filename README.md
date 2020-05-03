@@ -27,3 +27,6 @@ layout.
 Here is an example of the screen during game play:
 
 <img src="assets/gameaction.png" width="700" height="600">
+
+---
+**Installation**
