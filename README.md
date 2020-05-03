@@ -24,4 +24,4 @@ layout.
    - Makes use of the Cinder, SQLLiteModernCpp, and 
    SQLLite3 libraries
 
-<img src="assets/gameaction.png" width="700" height="500">
+<img src="assets/gameaction.png" width="700" height="600">
