@@ -71,5 +71,14 @@ Added background music.
     - Need to finish a method in GameEngine that checks
     if an item was clicked.
 
+- **4/30/2020** Added the PROPOSAL.md file to my 
+project repo.
+    - Still need to add effects of items.
+    - Need to write more tests for item clicking method.
+    
+- **5/02/2020** Finished adding item effects to the game.
+I changed my poison potion image and wrote tests for 
+the method that checks if an item was clicked. 
+    - Still need to fill out the README.md file.
 
 ---

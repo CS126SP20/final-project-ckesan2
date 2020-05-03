@@ -2,8 +2,8 @@
 
 #define CATCH_CONFIG_MAIN
 
-#include "mylibrary/gameengine.h"
-#include "mylibrary/circle.h"
+#include <mylibrary/gameengine.h>
+#include <mylibrary/circle.h>
 #include <catch2/catch.hpp>
 
 TEST_CASE("Getting the correct score", "[game score]") {
@@ -201,6 +201,7 @@ TEST_CASE("No Game Mode Picked", "[no game mode]") {
 
 TEST_CASE("Clicked on Item", "[picked item]") {
 
+  //makes sure it returns true when the click is on the center of the image
   mylibrary::GameEngine engine;
   int mouse_x = 400;
   int mouse_y = 360;
@@ -210,11 +211,43 @@ TEST_CASE("Clicked on Item", "[picked item]") {
   int height = 100;
   REQUIRE(engine.ClickedItem(mouse_x, mouse_y, item_centerx, item_centery,
       width, height));
-
+  //make sure it returns true when the click is on the image but just not its
+  //center
   SECTION("Not same coordinates") {
-    REQUIRE(engine.ClickedItem(412, 361, 400, 360, 100, 100));
+    REQUIRE(engine.ClickedItem(401, 361, 400, 360, 100, 100));
+  }
+  //makes sure method returns true when the click is on the edge of the image
+  SECTION("Edge of the item")  {
+    REQUIRE(engine.ClickedItem(200, 200, 250, 250, 100, 100));
+    REQUIRE(engine.ClickedItem(200, 200, 250, 200, 100, 100));
+    REQUIRE(engine.ClickedItem(200, 200, 300, 250, 200, 100));
+    REQUIRE(engine.ClickedItem(250, 350, 275, 375, 50, 50));
+    REQUIRE(engine.ClickedItem(0, 0, 0, 0, 0, 0));
   }
 }
+
+TEST_CASE("Item Is Not Clicked", "[normal click]") {
+
+  //checks that the method return false when the mouse does not click in the
+  //image range
+  mylibrary::GameEngine engine;
+  int mouse_x = 400;
+  int mouse_y = 360;
+  int item_centerx = 1000;
+  int item_centery = 1000;
+  int width = 100;
+  int height = 100;
+  REQUIRE(!engine.ClickedItem(mouse_x, mouse_y, item_centerx,
+      item_centery, width, height));
+  //checks that the method returns false when the click x and y coordinates
+  //are both one off the edges of the image
+  SECTION("Off By One") {
+    REQUIRE(!engine.ClickedItem(100, 250, 201, 351, 200, 200));
+    REQUIRE(!engine.ClickedItem(400, 400, 299, 299, 200, 200));
+  }
+}
+
+
 
 
 
