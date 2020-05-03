@@ -31,7 +31,7 @@ class MyApp : public cinder::app::App {
   void DrawTimer(double seconds);
   //draws after the game is over and displays scores
   void DrawEndScreen();
-
+  //draws the two potions on the screen
   void DrawItems();
 
  private:

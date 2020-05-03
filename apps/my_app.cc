@@ -283,6 +283,7 @@ void MyApp::DrawEndScreen() {
 
 void MyApp::DrawItems() {
 
+  //draws poison item and stores its coordinates and dimensions into variables
   const cinder::vec2 center = getWindowCenter();
   if (no_poison && not_slow) {
     Rectf poison_rect( center.x - 50, center.y - 50,
@@ -293,6 +294,8 @@ void MyApp::DrawItems() {
     poison_height = poison_rect.getHeight();
     poison_width = poison_rect.getWidth();
   }
+  //draws slowing potion item and stores its coordinates and dimensions
+  // into variables
   if (no_poison && not_slow && mode == "hard") {
     Rectf slow_rect( center.x - 50, center.y + 70, center.x + 50,
                     center.y + 210);
