@@ -21,12 +21,41 @@ layout.
    
    - Keeps a leader board for each difficulty
  
-   - Makes use of the Cinder, SQLLiteModernCpp, and 
-   SQLLite3 libraries
+   - Makes use of the Cinder, 
+   [SQLiteModernCpp](https://github.com/SqliteModernCpp/sqlite_modern_cpp),
+    and SQLLite3 libraries
    
 Here is an example of the screen during game play:
 
 <img src="assets/gameaction.png" width="700" height="600">
 
 ---
-**Installation**
+**Installation:**
+
+    - This is a Cmake Project. Cmake is necessary to 
+    have installed!
+    
+    - The Cinder Library is also required to be installed.
+
+**Cinder**:
+
+- To download Cinder onto your machine, click 
+[here](https://libcinder.org/download).
+
+- **Important!!!**: For Windows Users, specifcally
+Visual Studio 2015 is needed to download Cinder properly.
+
+- [Here](https://libcinder.org/docs/guides/tour/hello_cinder_chapter1.html) 
+is a basic tutorial on how Cinder works.
+
+- Here is some Cinder 
+[documentation](https://libcinder.org/docs/reference/index.html) 
+on classes and utilities.
+
+- _Quick Click_ specifically utilizes Texture2d and 
+and the [Voice](https://libcinder.org/docs/guides/audio/index.html) API
+
+- Furthermore, a huge aspect of this project is recognizing
+mouse clicking with the use of Cinder. Here is 
+documentation on the [mouse](https://libcinder.org/docs/guides/tour/hello_cinder_chapter3.html) 
+methods.
