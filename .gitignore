@@ -146,9 +146,4 @@ _deps
 # Don't track database files.
 # assets/*.db
 # assets/*.sqlite*
-/assets/endingpic.jpg
-/assets/Elevators_Need_Rock_Too.mp3
-/assets/slow.png
-/assets/poison.png
-/assets/space.jpg
-/assets/earthcrater.jpg
+

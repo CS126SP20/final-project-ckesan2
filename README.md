@@ -21,7 +21,7 @@ layout.
    
    - Keeps a leader board for each difficulty
    
-   - Included 2 potion items that speed and slow 
+   - Includes two potion items that speed and slow 
    object movement.
  
    - Makes use of the Cinder, 
