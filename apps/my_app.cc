@@ -60,9 +60,9 @@ void MyApp::setup() {
   is_mode_screen = true;
   //loads my 3 background images into the textures
   auto picture = loadImage(
-      loadAsset( "spacepic.jpeg" ) );
+      loadAsset( "space.jpg" ) );
   front_image = cinder::gl::Texture2d::create( picture);
-  auto game_pic = loadImage(loadAsset("earth.jpg"));
+  auto game_pic = loadImage(loadAsset("earthcrater.jpg"));
   game_image = cinder::gl::Texture2d::create( game_pic);
   auto ending_pic = loadImage(loadAsset("endingpic.jpg"));
   end_image = cinder::gl::Texture2d::create(ending_pic);

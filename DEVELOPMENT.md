@@ -55,8 +55,7 @@ image and blocks.
     - Still need to add an item to the game
     - Still need to add background music
 
-- **4/26/2020** Made my background pictures less blurry. 
-Added comments to my files. I also replaced some of my magic 
+- **4/26/2020** Added comments to my files. I also replaced some of my magic 
 numbers and adjusted how I obtain my circle radius. Made a 
 getter in the Circle class.
     - Still need to add an item to the game

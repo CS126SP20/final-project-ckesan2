@@ -28,7 +28,7 @@ class GameEngine {
   //takes in the mouse click coordinates and the screen center coordinates and
   // checks which game mode the user picked. Returns the name of the game mode
   std::string GetGameMode(int mouse_x, int mouse_y, int center_x, int center_y);
-  //takes in mouse click coordinates and returns whether the user clicker on
+  //takes in mouse click coordinates and returns whether the user clicked on
   //an item or not
   bool ClickedItem(int mouse_x, int mouse_y, int item_centerx, int item_centery,
       int item_width, int item_height);
