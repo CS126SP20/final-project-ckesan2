@@ -271,7 +271,7 @@ void MyApp::DrawEndScreen() {
     PrintText(ss.str(), color, size, {center.x,center.y +
     (++row) * mylibrary::kYsize});
   }
-  //notifies player which item they clicked on.
+  //notifies player which item they clicked on
   if (!no_poison) {
     PrintText("You picked the poison potion!", color, size,
               {center.x, center.y - 200});

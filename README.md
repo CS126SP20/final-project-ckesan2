@@ -10,3 +10,17 @@ layout.
 
 **Author**: Chandrachur Kesana - [`ckesan2@illinois.edu`](mailto:ckesan2@illinois.edu)
 
+###### **Quick Click**:
+
+* What is it? 
+
+   - It is a game for users to click on moving objects for
+    points with a time limit. 
+    
+   - Includes three different game modes 
+   
+   - Keeps a leader board for each difficulty
+ 
+   - Makes use of the Cinder, SQLLiteModernCpp, and 
+   SQLLite3 libraries
+   
