@@ -1,6 +1,6 @@
 # Quick Click Final Project
 
-![](assets/gamescreen.png)
+<img src="assets/gamescreen.png" width="700" height="500">
 
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![docs](https://img.shields.io/badge/docs-yes-brightgreen)](docs/README.md)
