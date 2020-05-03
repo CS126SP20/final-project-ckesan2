@@ -74,3 +74,4 @@ in the CMakeLists.txt file and added as dependencies.
 - These libraries are used to create queries to 
 create the leader board tables and display the 
 top scores at the end of the game.
+

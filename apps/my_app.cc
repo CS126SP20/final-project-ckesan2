@@ -274,10 +274,10 @@ void MyApp::DrawEndScreen() {
   //notifies player which item they clicked on
   if (!no_poison) {
     PrintText("You picked the poison potion!", color, size,
-              {center.x, center.y - 200});
+              {center.x, center.y - 180});
   } else if (!not_slow) {
     PrintText("You picked the slowing potion!", color, size,
-              {center.x, center.y - 200});
+              {center.x, center.y - 180});
   }
 }
 
