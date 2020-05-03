@@ -23,5 +23,7 @@ layout.
  
    - Makes use of the Cinder, SQLLiteModernCpp, and 
    SQLLite3 libraries
+   
+Here is an example of the screen during game play:
 
 <img src="assets/gameaction.png" width="700" height="600">
