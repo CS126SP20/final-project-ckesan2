@@ -20,10 +20,13 @@ layout.
    - Includes three different game modes 
    
    - Keeps a leader board for each difficulty
+   
+   - Included 2 potion items that speed and slow 
+   object movement.
  
    - Makes use of the Cinder, 
    [SQLiteModernCpp](https://github.com/SqliteModernCpp/sqlite_modern_cpp),
-    and SQLLite3 libraries
+    and SQLite3 libraries
    
 Here is an example of the screen during game play:
 
@@ -52,10 +55,22 @@ is a basic tutorial on how Cinder works.
 [documentation](https://libcinder.org/docs/reference/index.html) 
 on classes and utilities.
 
-- _Quick Click_ specifically utilizes Texture2d and 
-and the [Voice](https://libcinder.org/docs/guides/audio/index.html) API
+- _Quick Click_ specifically utilizes Texture2d for loading images
+ and the [Voice](https://libcinder.org/docs/guides/audio/index.html) API
+ for background music
 
 - Furthermore, a huge aspect of this project is recognizing
 mouse clicking with the use of Cinder. Here is 
 documentation on the [mouse](https://libcinder.org/docs/guides/tour/hello_cinder_chapter3.html) 
 methods.
+
+**SQLLite**: 
+
+- There is no need to install the 
+[SQLiteModernCpp](https://github.com/SqliteModernCpp/sqlite_modern_cpp)
+and SQLite3 libraries because they are already included
+in the CMakeLists.txt file and added as dependencies.
+
+- These libraries are used to create queries to 
+create the leader board tables and display the 
+top scores at the end of the game.
