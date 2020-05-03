@@ -199,6 +199,23 @@ TEST_CASE("No Game Mode Picked", "[no game mode]") {
   }
 }
 
+TEST_CASE("Clicked on Item", "[picked item]") {
+
+  mylibrary::GameEngine engine;
+  int mouse_x = 400;
+  int mouse_y = 360;
+  int item_centerx = 400;
+  int item_centery = 360;
+  int width = 100;
+  int height = 100;
+  REQUIRE(engine.ClickedItem(mouse_x, mouse_y, item_centerx, item_centery,
+      width, height));
+
+  SECTION("Not same coordinates") {
+    REQUIRE(engine.ClickedItem(412, 361, 400, 360, 100, 100));
+  }
+}
+
 
 
 

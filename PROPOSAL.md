@@ -25,6 +25,6 @@ Timeline:
   - Write functionality for Background Music
   - Write functionality for keeping score and displaying that at the end of the game
   
-If I end up finishing earlier than expected, I can have the player keep playing if they reach a certain score. I can also add items to the game. 
+If I end up finishing earlier than expected, I can add items to the game to act as powerups or poison. 
 
 ---

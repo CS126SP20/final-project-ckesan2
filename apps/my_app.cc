@@ -9,8 +9,7 @@
 #include <gflags/gflags.h>
 #include <cinder/Font.h>
 #include <cinder/Text.h>
-#include "mylibrary/circle.h"
-#include "nlohmann/json.hpp"
+#include <mylibrary/circle.h>
 #include <cinder/audio/Voice.h>
 
 namespace myapp {
@@ -24,8 +23,8 @@ const int kModeXSize = 400;
 const int kTimerXSize = 100;
 const int kEndXSize = 500;
 bool is_mode_screen = true;
-bool clicked_poison = false;
-bool clicked_slow = false;
+bool no_poison = true;
+bool not_slow = true;
 
 using cinder::Color;
 using cinder::ColorA;
@@ -43,7 +42,6 @@ cinder::gl::Texture2dRef poison_image;
 cinder::gl::Texture2dRef slow_image;
 cinder::audio::VoiceRef mVoice;
 
-//add summary bit for item selected at the end screen
 DECLARE_string(name);
 
 MyApp::MyApp() :
@@ -58,7 +56,7 @@ void MyApp::setup() {
       cinder::app::loadAsset(
           "Elevators_Need_Rock_Too.mp3" ) );
   mVoice = cinder::audio::Voice::create( sourceFile );
-  //mVoice->start();
+  mVoice->start();
   is_mode_screen = true;
   //loads my 3 background images into the textures
   auto picture = loadImage(
@@ -106,7 +104,7 @@ void MyApp::draw() {
   cinder::gl::color( Color::white());
   //if game is over, draw the game over picture and screen
   if (timer == 0) {
-    //mVoice->stop();
+    mVoice->stop();
     cinder::gl::draw(end_image, getWindowBounds());
     DrawEndScreen();
     return;
@@ -147,10 +145,6 @@ void PrintText(const string& text, const Color& color,
   cinder::gl::draw(texture, locp);
 }
 
-void MyApp::keyDown(KeyEvent event) {
-
-}
-
 void MyApp::DrawModeScreen() {
 
   //sizes for the text boxes to be printed
@@ -181,6 +175,11 @@ void MyApp::DrawBlocks() {
     threshold = .8;
   } else if (mode == "hard") {
     threshold = .5;
+  }
+  if (!no_poison) {
+    threshold = .2;
+  } else if (!not_slow) {
+    threshold = 2;
   }
   //if the time to switch has reached, the coordinates become random spots
   //on the screen
@@ -231,14 +230,23 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
       }
       //if a mode has already been picked, check to see if the user clicked
       //on one of the circles
-    } else if (engine.ClickedCircle(event.getX(), event.getY(), first_x,
-        first_y, radius) || engine.ClickedCircle(event.getX(), event.getY(),
-            second_x, second_y, radius)) {
+    } else if (engine.ClickedCircle(event.getX(), event.getY(),
+        first_x, first_y, radius) || engine.ClickedCircle(event.getX(),
+            event.getY(), second_x, second_y, radius)) {
       //if the game is not over yet, add to the score
       if (timer != 0) {
         engine.IncreaseScore();
       }
-      cout << engine.GetScore() << endl;
+      //if neither item has been picked yet check to see if the click is one of
+      //the items.
+    } else if (no_poison && not_slow && timer <= 10) {
+        if (engine.ClickedItem(event.getX(), event.getY(), poison_centerx,
+                               poison_centery, poison_width, poison_height)) {
+          no_poison = false;
+        } else if (engine.ClickedItem(event.getX(), event.getY(), slow_centerx,
+                                      slow_centery, slow_width, slow_height)) {
+          not_slow = false;
+        }
     }
   }
 }
@@ -263,28 +271,36 @@ void MyApp::DrawEndScreen() {
     PrintText(ss.str(), color, size, {center.x,center.y +
     (++row) * mylibrary::kYsize});
   }
+  //notifies player which item they clicked on
+  if (!no_poison) {
+    PrintText("You picked the poison potion!", color, size,
+              {center.x, center.y - 200});
+  } else if (!not_slow) {
+    PrintText("You picked the slowing potion!", color, size,
+              {center.x, center.y - 200});
+  }
 }
 
 void MyApp::DrawItems() {
 
   const cinder::vec2 center = getWindowCenter();
-  if (!clicked_poison) {
+  if (no_poison && not_slow) {
     Rectf poison_rect( center.x - 50, center.y - 50,
         center.x + 50,center.y + 50);
     cinder::gl::draw( poison_image, poison_rect);
     poison_centerx = poison_rect.getCenter().x;
     poison_centery = poison_rect.getCenter().y;
     poison_height = poison_rect.getHeight();
-    poison_height = poison_rect.getWidth();
+    poison_width = poison_rect.getWidth();
   }
-  if (!clicked_slow && mode == "hard") {
+  if (no_poison && not_slow && mode == "hard") {
     Rectf slow_rect( center.x - 50, center.y + 70, center.x + 50,
                     center.y + 210);
     cinder::gl::draw( slow_image, slow_rect);
     slow_centerx = slow_rect.getCenter().x;
     slow_centery = slow_rect.getCenter().y;
     slow_height = slow_rect.getHeight();
-    slow_height = slow_rect.getWidth();
+    slow_width = slow_rect.getWidth();
   }
 }
 }  // namespace myapp
