@@ -75,3 +75,4 @@ in the CMakeLists.txt file and added as dependencies.
 create the leader board tables and display the 
 top scores at the end of the game.
 
+<img src="assets/endingpic.jpg" width="700" height="600">
