@@ -80,4 +80,7 @@ I changed my poison potion image and wrote tests for
 the method that checks if an item was clicked. 
     - Still need to fill out the README.md file.
 
+- **5/03/2020** Picked out less blurry background images
+and finished writing the documentation in the 
+README.md file for the project.
 ---
