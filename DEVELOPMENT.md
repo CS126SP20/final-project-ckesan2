@@ -83,4 +83,7 @@ the method that checks if an item was clicked.
 - **5/03/2020** Picked out less blurry background images
 and finished writing the documentation in the 
 README.md file for the project.
+
+- **5/04/2020** Added more documentation to the README.md
+file about gflags and how to build libcinder.
 ---
