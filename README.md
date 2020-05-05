@@ -23,11 +23,13 @@ layout.
    - Keeps a leader board for each difficulty
    
    - Includes two potion items that speed and slow 
-   object movement.
+   object movement
  
    - Makes use of the Cinder, [gflags](https://github.com/gflags/gflags),
    [SQLiteModernCpp](https://github.com/SqliteModernCpp/sqlite_modern_cpp),
     and SQLite3 libraries
+    
+    - Uses Catch2 library for testing purposes
     
    
 Here is an example of the screen during game play:
