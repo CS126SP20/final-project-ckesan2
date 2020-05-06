@@ -22,6 +22,7 @@ const int kFontSize = 30;
 const int kModeXSize = 400;
 const int kTimerXSize = 100;
 const int kEndXSize = 500;
+const int kItemTime = 10;
 bool is_mode_screen = true;
 bool no_poison = true;
 bool not_slow = true;
@@ -116,7 +117,7 @@ void MyApp::draw() {
     //otherwise draw the game image and game screen
   } else if (!is_mode_screen) {
     cinder::gl::draw( game_image, getWindowBounds());
-    if (timer <= 10) {
+    if (timer <= kItemTime) {
       DrawItems();
     }
     DrawBlocks();
@@ -239,7 +240,7 @@ void MyApp::mouseDown(cinder::app::MouseEvent event) {
       }
       //if neither item has been picked yet check to see if the click is one of
       //the items.
-    } else if (no_poison && not_slow && timer <= 10) {
+    } else if (no_poison && not_slow && timer <= kItemTime) {
         if (engine.ClickedItem(event.getX(), event.getY(), poison_centerx,
                                poison_centery, poison_width, poison_height)) {
           no_poison = false;
